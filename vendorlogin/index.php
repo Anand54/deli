@@ -30,7 +30,7 @@ include '../header.php';
                 style="background:red; color:white">Login</button>
             </div>
             <div class=" mt-3 pb-3">
-              <span class="">New Vendor? <a href="../vendor_register/">Create an Account</a></span>
+              <span class="">New Vendor? <a href="<?php echo BASE_URL; ?>vendorRegister/index.php/">Create an Account</a></span>
             </div>
           </div>
         </div>
