@@ -1,4 +1,6 @@
-
+<?php
+ include 'header.php';
+  ?>
 <div class="topbar pt-3 mb-2" ><a class="btn"><i class="bi bi-list p-3" id="colpsCustom"></i></a><span class="fw-bold mt-3">Products</span>
 </div>
 <div style="overflow:auto;" class="font_size_in_mobile">
@@ -62,7 +64,7 @@
 <script>
 // $(document).ready(function(){
 //     $("#saveBtn").click(function(){
-//         if(<?php echo $list_counted;?>>=5){
+//         if(list_counted>=5){
 //            alert("You can create only 5 Favorite List.")
 //         }else{
 //             var products_id=[];

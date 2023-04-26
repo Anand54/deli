@@ -17,7 +17,7 @@
 //     foreach($datas as $data){
 //      $discountPercent =$data['discountPercent'];   
 //     }
-// ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,6 +52,9 @@
     <link rel="stylesheet" href="assets\css\style.css">
     <link rel="stylesheet" href="assets\css\responsive.css">
 
+
+    <!--jquery cdn-->
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <!-- jquery script -->
     <!-- jquery script -->
     <script src="assets/vendor/jquery/jquery.min.js"></script>
@@ -66,8 +69,7 @@
     <!-- bootstrap cdn -->
     <!-- bootstrap cdn -->
 
-    <!--jquery cdn-->
-  <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    
 </head>
  <script>
  </script>
@@ -88,8 +90,8 @@
             <li class="nav-item active">
                 <a class="nav-link">
                     <i class="bi bi-person-circle"></i>
-                    <!-- <?php   -->
-        //    if($_SESSION['login_status']==1){
+                
+        <!-- //    if($_SESSION['login_status']==1){
         //        $sql='';
         //        if(isset($_SESSION['vendor_email'])){
         //            $user=$_SESSION['vendor_email'];
@@ -98,14 +100,10 @@
         //         $conn = dbConnecting();
         //         $req = mysqli_query($conn, $sql) or die(mysqli_error($conn));
         //         if (mysqli_num_rows($req) > 0) {
-        //             while ($data = mysqli_fetch_assoc($req)) {
-                ?>
-                    <span  type="<?php  echo $data["vendor_company_name"] ?>" title="<?php  echo $data["vendor_company_name"] ?>" class="text-white"><?php  echo $data["vendor_company_name"] ?></span>
-                        <!-- <?php
-                    }
-                }
-               }
-                ?> -->
+        //             while ($data = mysqli_fetch_assoc($req)) { -->
+
+                    <span  type="text" title="aaaaaaa" class="text-white">vendor company name</span>
+
                 </a>
             </li>
             <!-- Divider -->
