@@ -1,23 +1,23 @@
 <?php 
-include "assets/library/database.php";
-date_default_timezone_set("asia/kathmandu");
-session_start(); 
-if (isset($_SESSION['vendor_email'])) {
-} else if ($_SESSION['vendor_email'] == ''||$_SESSION['vendor_email'] !== $_SESSION['vendor_email']) {
-    unset($_SESSION["vendor_email"]);
-    echo '<script>window.location.href = "http://delinepal.com/vendor_login/";</script>';
-}else{
-    echo "<hr><h1>No thing yr</h1><hr><hr>";
-}
+// include "assets/library/database.php";
+// date_default_timezone_set("asia/kathmandu");
+// session_start(); 
+// if (isset($_SESSION['vendor_email'])) {
+// } else if ($_SESSION['vendor_email'] == ''||$_SESSION['vendor_email'] !== $_SESSION['vendor_email']) {
+//     unset($_SESSION["vendor_email"]);
+//     echo '<script>window.location.href = "http://delinepal.com/vendor_login/";</script>';
+// }else{
+//     echo "<hr><h1>No thing yr</h1><hr><hr>";
+// }
 
 
-    $discountPercent="";
-    $select_discount_percent = "SELECT `discountPercent` FROM `vendor_users` WHERE `vendor_email` ='".$_SESSION["vendor_email"]."';";
-    $datas = get_Table_Data($select_discount_percent);
-    foreach($datas as $data){
-     $discountPercent =$data['discountPercent'];   
-    }
-?>
+//     $discountPercent="";
+//     $select_discount_percent = "SELECT `discountPercent` FROM `vendor_users` WHERE `vendor_email` ='".$_SESSION["vendor_email"]."';";
+//     $datas = get_Table_Data($select_discount_percent);
+//     foreach($datas as $data){
+//      $discountPercent =$data['discountPercent'];   
+//     }
+// ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,24 +88,24 @@ if (isset($_SESSION['vendor_email'])) {
             <li class="nav-item active">
                 <a class="nav-link">
                     <i class="bi bi-person-circle"></i>
-                    <?php  
-           if($_SESSION['login_status']==1){
-               $sql='';
-               if(isset($_SESSION['vendor_email'])){
-                   $user=$_SESSION['vendor_email'];
-                   $sql = "SELECT  `vendor_company_name` FROM `vendor_users` WHERE `vendor_email` = '$user';";
-               }
-                $conn = dbConnecting();
-                $req = mysqli_query($conn, $sql) or die(mysqli_error($conn));
-                if (mysqli_num_rows($req) > 0) {
-                    while ($data = mysqli_fetch_assoc($req)) {
+                    <!-- <?php   -->
+        //    if($_SESSION['login_status']==1){
+        //        $sql='';
+        //        if(isset($_SESSION['vendor_email'])){
+        //            $user=$_SESSION['vendor_email'];
+        //            $sql = "SELECT  `vendor_company_name` FROM `vendor_users` WHERE `vendor_email` = '$user';";
+        //        }
+        //         $conn = dbConnecting();
+        //         $req = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+        //         if (mysqli_num_rows($req) > 0) {
+        //             while ($data = mysqli_fetch_assoc($req)) {
                 ?>
                     <span  type="<?php  echo $data["vendor_company_name"] ?>" title="<?php  echo $data["vendor_company_name"] ?>" class="text-white"><?php  echo $data["vendor_company_name"] ?></span>
-                        <?php
+                        <!-- <?php
                     }
                 }
                }
-                ?>
+                ?> -->
                 </a>
             </li>
             <!-- Divider -->
