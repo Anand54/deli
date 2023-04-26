@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS delinepal;
-CREATE database IF not exists delinepal;
-use delinepal;
+DROP DATABASE IF EXISTS deliecom;
+CREATE database IF not exists deliecom;
+use deliecom;
 
 CREATE TABLE IF NOT EXISTS admin(
     `id` bigint PRIMARY key,

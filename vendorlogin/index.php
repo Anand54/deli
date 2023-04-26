@@ -43,7 +43,6 @@ session_start();
   </form>
 
 <?php
-  // include '../assets/library/library.php';
   if (isset($_POST['req_login'])) {
     $useremail = $_POST['email'];
     $userpassword = trim($_POST['password']);
