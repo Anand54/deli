@@ -22,6 +22,12 @@ CREATE TABLE IF NOT EXISTS users(
     pass varchar(255),
     remarks varchar(255)
     );
+    
+CREATE TABLE IF NOT EXISTS category(
+      id bigint PRIMARY KEY,
+      pGroup varchar(255) NOT NULL,
+      remarks varchar(255)
+);
 
 CREATE TABLE IF NOT EXISTS product(
    id bigint PRIMARY KEY,
@@ -34,11 +40,7 @@ CREATE TABLE IF NOT EXISTS product(
    pStatus varchar(255) NOT NULL,
    FOREIGN KEY (categoryID) REFERENCES category(id)
 );
-CREATE TABLE IF NOT EXISTS category(
-      id bigint PRIMARY KEY,
-      pGroup varchar(255) NOT NULL,
-      remarks varchar(255)
-);
+
 
 CREATE TABLE `vendor_users` (
   `id` bigint PRIMARY KEY NOT NULL,
