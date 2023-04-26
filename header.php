@@ -4,16 +4,21 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- bootstrap icon cdn -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-  
- 
-    <link rel="stylesheet" href="assets/css/header.css">
+     <?php include "assets/library/function_here.php"; ?>
+    <!-- <link rel="stylesheet" href="assets/css/header.css"> -->
     <title>Deli Nepal</title>
     <link rel="icon" type="images/ico" href="favicon.ico">
     <?php include "base_url.php"; ?>
   </head>
+  <style>
+    body {
+  overflow-x: hidden;
+}
+  </style>
   <body>
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">

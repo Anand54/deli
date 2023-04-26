@@ -1,6 +1,10 @@
 <?php 
 include '../header.php';
 ?>
+<?php
+session_start();
+?>
+  <script src="https://cdn.jsdelivr.net/npm/jquery.session@1.0.0/jquery.session.min.js"></script>
   <form action="#" method="post">
     <div class="row row-cols-1 row-cols-md-2 p-2">
       <div class="col">
@@ -30,13 +34,63 @@ include '../header.php';
                 style="background:red; color:white">Login</button>
             </div>
             <div class=" mt-3 pb-3">
-              <span class="">New Vendor? <a href="<?php echo BASE_URL; ?>vendorRegister/index.php/">Create an Account</a></span>
+              <span class="">New Vendor? <a href="<?php echo BASE_URL; ?>vendorRegister">Create an Account</a></span>
             </div>
           </div>
         </div>
       </div>
     </div>
   </form>
+
+<?php
+  // include '../assets/library/library.php';
+  if (isset($_POST['req_login'])) {
+    $useremail = $_POST['email'];
+    $userpassword = trim($_POST['password']);
+    $userpassword = md5($userpassword);
+    $userpassword = trim($userpassword);
+
+    if ($useremail == "" || $userpassword == "") {
+      popMsg("Input filled are empty!! Please fill the form properly.");
+    } else {
+      $sql = "SELECT IF(EXISTS(SELECT `vendor_email`,`vendor_pass` FROM `vendor_users` WHERE `vendor_email`='$useremail'),1,0) as result;"; //echo $sql;
+      $result = check_if_exist($sql);
+      if ($result == 0) {
+        popMsg("Invalid or incorrect information. Please check and try again.");
+      } else if ($result == 1) {
+        $srv_email = '';
+        $srv_pass = '';
+        $myquery = "SELECT  `vendor_email`, `vendor_pass` FROM `vendor_users` WHERE `vendor_email` ='$useremail' and `active_state`='1';"; //echo $myquery;
+        // echo $myquery;
+        $details = get_Table_Data($myquery);
+        foreach ($details as $detail) {
+          $srv_email = $detail['vendor_email'];
+          $srv_pass = trim($detail['vendor_pass']);
+        }
+        // echo "<br>".$userpassword."<br>";
+        // echo $srv_pass;
+        if ($useremail == $srv_email) {
+        //   echo "<br>inside email";
+          if ($userpassword == $srv_pass) {
+            // echo "inside pass";
+            $_SESSION['session_start_status'] = 'started';
+            $_SESSION['vendor_email'] = $useremail;
+            $_SESSION['login_status'] = 1;
+            echo "success";
+            echo '<script>window.location.href = "http://delinepal.com/assets/vendor/create_list.php";</script>';
+ 
+          } else {
+            popMsg("Invalid or incorrect information. Please check and try again.");
+          }
+        } else {
+          popMsg("Invalid or incorrect information. Please check and try again.");
+        }
+      } else {
+        popMsg("Invalid or incorrect information. Please check and try again.");
+      }
+    }
+  }
+  ?>
 
 <?php 
 include '../footer.php';
