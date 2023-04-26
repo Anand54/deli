@@ -70,4 +70,41 @@ function run_insert_query($query)
         return 0;
     }
 }
+
+function check_if_exist($sql)
+{
+  $conn = dbConnecting();
+  $req = mysqli_query($conn, $sql);
+  $result = mysqli_fetch_assoc($req);
+  $val = $result['result'];
+  if ($val == 1) {
+    return 1;
+  } else if ($val == 0) {
+    return 0;
+  } else {
+    return mysqli_error($conn);
+  }
+  mysqli_close($conn);
+}
+
+function run_update_query($sql){
+    $conn = dbConnecting();
+    $req = mysqli_query($conn,$sql);
+    if($req){
+        history_table($sql, true);
+        //success
+        // echo "query executed";
+        $row = mysqli_affected_rows($conn);
+        // echo "affected Row : ".$row;
+        if($row==1){
+            return 1;
+        }else{
+            mysqli_error($conn);
+            return 0;
+        }
+    }else{
+        //failed
+    }
+}
+
 ?>

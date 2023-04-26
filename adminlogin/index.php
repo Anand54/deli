@@ -1,7 +1,10 @@
  <?php 
  include '../header.php';
+//  include '../header.php';
  ?> 
-  
+<?php
+session_start();
+?>
   <form action="#" method="post" style="background-color: white;">
     <div class="row row-cols-1 row-cols-md-2 p-2">
         <div class="col">
@@ -34,6 +37,34 @@
         </div>
     </div>
 </form>
+
+<?php
+
+if (isset($_POST["adminSubmit"])) {
+    $email = $_POST['email'];
+    $pass = trim($_POST['pass']);
+    if ($email == "" || $pass == "") {
+        popMsg('Input filled are empty!! Please fill the form properly.');
+    } else {
+        $myquery = "SELECT IF ( EXISTS (SELECT `email`,`admin_pass` FROM `admin` WHERE email='$email' and admin_pass='$pass' and `active_state`=1),1,0)as result;";
+        $md5Pass = md5($pass);
+        $myquery2 = "SELECT IF ( EXISTS (SELECT `email`,`admin_pass` FROM `admin` WHERE email='$email' and admin_pass='$md5Pass' and `active_state`=1),1,0)as result;";
+        $req1 = check_if_exist($myquery);// echo "req1 :".$req1; 
+        $req2 = check_if_exist($myquery2);// echo "req1 :".$req1;
+        if ($req1 == 1 || $req2==1) {
+            $_SESSION['adminemail'] = $email;
+           ?>
+           <script>window.location.href = "<?php echo BASE_URL; ?>Dashboard/"</script>'
+           <?php
+        } else {
+            popMsg("Invalid or incorrect information. Please check and try again.");
+            ?>
+<script></script>
+<?php
+        }
+    }
+}
+?>
 
  <?php 
  include '../footer.php';

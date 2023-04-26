@@ -61,24 +61,19 @@ session_start();
         $srv_email = '';
         $srv_pass = '';
         $myquery = "SELECT  `vendor_email`, `vendor_pass` FROM `vendor_users` WHERE `vendor_email` ='$useremail' and `active_state`='1';"; //echo $myquery;
-        // echo $myquery;
         $details = get_Table_Data($myquery);
         foreach ($details as $detail) {
           $srv_email = $detail['vendor_email'];
           $srv_pass = trim($detail['vendor_pass']);
         }
-        // echo "<br>".$userpassword."<br>";
-        // echo $srv_pass;
         if ($useremail == $srv_email) {
-        //   echo "<br>inside email";
           if ($userpassword == $srv_pass) {
-            // echo "inside pass";
             $_SESSION['session_start_status'] = 'started';
             $_SESSION['vendor_email'] = $useremail;
             $_SESSION['login_status'] = 1;
             echo "success";
-            echo '<script>window.location.href = "http://delinepal.com/assets/vendor/create_list.php";</script>';
- 
+            ?><script>window.location.href = "<?php echo BASE_URL; ?>vendor/order_history.php";</script>
+ <?php
           } else {
             popMsg("Invalid or incorrect information. Please check and try again.");
           }

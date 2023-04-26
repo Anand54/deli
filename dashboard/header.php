@@ -1,3 +1,15 @@
+<?php
+date_default_timezone_set("asia/kathmandu");
+session_start();
+if (isset($_SESSION['adminemail'])) {
+    // echo "<hr><hr><hr><hr><hr><h1>".$_SESSION['adminemail']."</h1><hr><hr><hr><hr><hr>";
+} else if ($_SESSION['adminemail'] == ''||$_SESSION['adminemail'] !== $_SESSION['adminemail']) {
+    echo "<hr><h1>AAAAANNNN".$_SESSION['adminemail']."</h1><hr><hr>";
+    echo '<script>    window.location.href = "http://localhost/deli/adminlogin/";</script>';
+}else{
+    echo "<hr><h1>No thing yr</h1><hr><hr>";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,7 +98,11 @@ include "library/connect_server.php";
                     <span>All Product</span></a>
             </li>
 
-
+            <li class="nav-item">
+                <a class="nav-link" href="vendor_user.php">
+                    <i class="bi bi-collection-fill"></i>
+                    <span>Users</span></a>
+            </li>
 
             <!-- Nav Item - checkout -->
             <!-- Nav Item - checkout -->

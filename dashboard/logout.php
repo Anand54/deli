@@ -7,7 +7,7 @@ if (isset($_SESSION["adminemail"])) {
     // die();
 ?>
 <script>
-    window.location.href = '../../adminlogin.php';
+    window.location.href = 'http://localhost/deli/adminlogin/';
 </script>
 <?php
 }
