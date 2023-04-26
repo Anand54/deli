@@ -8,15 +8,9 @@
     <meta name="author" content="">
     <title>Dashboard</title>
      <link rel="icon" type="images/ico" href="favicon.ico">
-
-    <!-- datatable -->
-    <!-- datatable -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.4/css/select.dataTables.css" />
-    <!-- datatable -->
-    <!-- datatable -->
-
+     <!-- datatable -->
+     <!-- datatable -->
+     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
     <!-- Custom fonts for this template-->
@@ -28,11 +22,6 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
-    <!-- select 2 -->
-    <!-- select 2 -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <!-- select 2 -->
-    <!-- select 2 -->
     
     <!-- css file  -->
     <!-- <link rel="stylesheet" type="text/css" href="css/select2.min.css" /> -->
@@ -55,17 +44,11 @@
     <!-- bootstrap cdn -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <style>
-        #offerModule {
-            display: none;
-        }
-    </style>
 
 </head>
 <?php 
-// include 'library/database.php'; 
+include "library/connect_server.php";
 ?>
 
 <body id="page-top">
@@ -93,16 +76,21 @@
 
             <!--add product and category -->
             <li class="nav-item">
-                <a class="nav-link" href="newCategory.php">
+                <a class="nav-link" href="api.php">
                     <i class="bi bi-collection-fill"></i>
                     <span>API</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="product.php">
+                    <i class="bi bi-collection-fill"></i>
+                    <span>All Product</span></a>
             </li>
 
 
 
             <!-- Nav Item - checkout -->
             <!-- Nav Item - checkout -->
-            <!-- <li class="nav-item">
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1"
                     aria-expanded="true" aria-controls="collapsePages1">
                     <i class="fas fa-fw fa-folder"></i>
@@ -113,11 +101,9 @@
                         <h6 class="collapse-header">Checkout</h6>
                         <a class="collapse-item" href="checkout.php">Checkout</a>
                         <a class="collapse-item" href="delivered.php">Delivered List</a>
-                        <a class="collapse-item" href="vendor_checkout.php">Vendor Checkout</a>
-                        <a class="collapse-item" href="vendor_delivered.php">Vendor Delivered List</a>
                     </div>
                 </div>
-            </li> -->
+            </li>
             
 
             <!-- Sidebar Toggler (Sidebar) -->

@@ -23,28 +23,38 @@ CREATE TABLE IF NOT EXISTS users(
     remarks varchar(255)
     );
 
-CREATE TABLE IF NOT EXISTS category (
-    id bigint primary key,
-    category_name varchar(255) not null,
-    category_type varchar(255) not null,
-    category_id varchar(255) unique not null,
-    path varchar(255) not null,
-    image varchar(255) not null,
-    remarks varchar(255)
-    );
+CREATE TABLE IF NOT EXISTS product(
+   id bigint PRIMARY KEY,
+   categoryID bigint not null,
+   pCode bigint NOT NULL,
+   product varchar(255) NOT NULL,
+   unit varchar(255) NOT NULL,
+   availableQty varchar(255) NOT NULL,
+   rate varchar(255) NOT NULL,
+   pStatus varchar(255) NOT NULL,
+   FOREIGN KEY (categoryID) REFERENCES category(id)
+);
+CREATE TABLE IF NOT EXISTS category(
+      id bigint PRIMARY KEY,
+      pGroup varchar(255) NOT NULL,
+      remarks varchar(255)
+);
 
-CREATE TABLE IF NOT EXISTS products(
-    id bigint primary key,
-    product_name varchar(255) not null,
-    category_id varchar(255) not null,
-    actual_Price decimal(15,2) not null,
-    sell_Price decimal(15,2) not null,
-    retailer_price decimal(10,2) not null,
-    wholesaler_price decimal(10,2) NOT null,
-    dealer_price decimal(10,2) NOT null,
-    img_path varchar(255) not null,
-    primary_image varchar(255) not null,
-    secondary_image varchar(255) not  null,
-    remarks varchar(255),
-    foreign key (category_id) references category(category_id)
-    );
+CREATE TABLE `vendor_users` (
+  `id` bigint PRIMARY KEY NOT NULL,
+  `active_state` tinyint(1) DEFAULT '1',
+  `user_type` varchar(25) NOT NULL,
+  `vendor_company_name` varchar(255) NOT NULL,
+  `vendor_email` varchar(255) NOT NULL,
+  `vendor_pass` varchar(255) NOT NULL,
+  `vendor_contact` varchar(255) NOT NULL,
+  `vendor_pan` varchar(255) DEFAULT '0',
+  `vendor_vat` varchar(255)  DEFAULT '0',
+  `discountPercent` varchar(255) DEFAULT '0',
+  `vendor_address` varchar(255) NOT NULL,
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `deactivate_date` datetime DEFAULT NULL,
+  `remarks` varchar(1000) DEFAULT NULL
+);
+
+

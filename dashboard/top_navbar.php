@@ -42,10 +42,6 @@
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="https://ultimanepal.com/changePassword.php">
-                    <i class="bi bi-lock-fill"></i>
-                    Change Password
-                </a>
                 <!--<div class="dropdown-divider"></div>-->
                 <a class="dropdown-item" href="logout.php" id="logBtn">
                     <i class="bi bi-box-arrow-right"></i>
