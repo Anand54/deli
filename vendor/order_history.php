@@ -54,7 +54,7 @@
                   <td>wwwww</td>
                   <td>jkjkkkk</td>
                   <td class="totalAfterDis">hhjh</td>
-                  <td class="col-1"><img src="sssss" class="w-100"></td>
+                  <td class="col-1">sds<!-- <img src="" class="w-100"> --></td>
                 </tr>
                    
                 <tr class="fw-bold">

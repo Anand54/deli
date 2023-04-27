@@ -36,7 +36,7 @@
         }
         else {
             $.ajax({
-                url: "assets/library/database.php",
+                url: "assets/library/change_pass_control.php",
                 method: "POST",
                 data: { vendor_change_password: newPass, userEmail: userEmail,oldPass:oldPass },
                 success: function (data) {
@@ -44,11 +44,12 @@
                 var da = JSON.parse(data);
                  if(da.status_code==200){
                     alert("Password Change successfully.");
+                     location.reload();
                 }
                 else{
                     alert("Old Password did't match");
                 }
-                    // location.reload();
+                   
                 }
             });
         }

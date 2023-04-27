@@ -1,22 +1,25 @@
 <?php 
-// include "assets/library/database.php";
-// date_default_timezone_set("asia/kathmandu");
-// session_start(); 
-// if (isset($_SESSION['vendor_email'])) {
-// } else if ($_SESSION['vendor_email'] == ''||$_SESSION['vendor_email'] !== $_SESSION['vendor_email']) {
-//     unset($_SESSION["vendor_email"]);
-//     echo '<script>window.location.href = "http://delinepal.com/vendor_login/";</script>';
-// }else{
-//     echo "<hr><h1>No thing yr</h1><hr><hr>";
-// }
+include "base_url.php";
+include "assets/library/connect_server.php";
+date_default_timezone_set("asia/kathmandu");
+session_start(); 
+if (isset($_SESSION['vendor_email'])) {
+} else if ($_SESSION['vendor_email'] == ''||$_SESSION['vendor_email'] !== $_SESSION['vendor_email']) {
+    unset($_SESSION["vendor_email"]);
+    ?>
+    <script>window.location.href = "<?php echo BASE_URL; ?>vendor_login/";</script>
+    <?php
+}else{
+    echo "<hr><h1>No thing yr</h1><hr><hr>";
+}
 
 
-//     $discountPercent="";
-//     $select_discount_percent = "SELECT `discountPercent` FROM `vendor_users` WHERE `vendor_email` ='".$_SESSION["vendor_email"]."';";
-//     $datas = get_Table_Data($select_discount_percent);
-//     foreach($datas as $data){
-//      $discountPercent =$data['discountPercent'];   
-//     }
+    $discountPercent="";
+    $select_discount_percent = "SELECT `discountPercent` FROM `vendor_users` WHERE `vendor_email` ='".$_SESSION["vendor_email"]."';";
+    $datas = get_Table_Data($select_discount_percent);
+    foreach($datas as $data){
+     $discountPercent =$data['discountPercent'];   
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,8 +52,8 @@
     <!-- Custom styles for this template-->
     <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="assets\css\style.css">
-    <link rel="stylesheet" href="assets\css\responsive.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
 
 
     <!--jquery cdn-->
@@ -90,19 +93,24 @@
             <li class="nav-item active">
                 <a class="nav-link">
                     <i class="bi bi-person-circle"></i>
-                
-        <!-- //    if($_SESSION['login_status']==1){
-        //        $sql='';
-        //        if(isset($_SESSION['vendor_email'])){
-        //            $user=$_SESSION['vendor_email'];
-        //            $sql = "SELECT  `vendor_company_name` FROM `vendor_users` WHERE `vendor_email` = '$user';";
-        //        }
-        //         $conn = dbConnecting();
-        //         $req = mysqli_query($conn, $sql) or die(mysqli_error($conn));
-        //         if (mysqli_num_rows($req) > 0) {
-        //             while ($data = mysqli_fetch_assoc($req)) { -->
-
-                    <span  type="text" title="aaaaaaa" class="text-white">vendor company name</span>
+                    <?php  
+                    if($_SESSION['login_status']==1){
+                    $sql='';
+                    if(isset($_SESSION['vendor_email'])){
+                        $user=$_SESSION['vendor_email'];
+                        $sql = "SELECT  `vendor_company_name` FROM `vendor_users` WHERE `vendor_email` = '$user';";
+                    }
+                        $conn = dbConnecting();
+                        $req = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+                        if (mysqli_num_rows($req) > 0) {
+                            while ($data = mysqli_fetch_assoc($req)) {
+                        ?>
+                            <span  type="<?php  echo $data["vendor_company_name"] ?>" title="<?php  echo $data["vendor_company_name"] ?>" class="text-white"><?php  echo $data["vendor_company_name"] ?></span>
+                                <?php
+                            }
+                        }
+                    }
+                    ?>
 
                 </a>
             </li>
@@ -124,7 +132,7 @@
                 <div id="collapsePages1" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Vendor</h6>
-                        <a class="collapse-item" href="create_list.php">Create List</a>
+                        <a class="collapse-item" href="<?php echo BASE_URL ?>vendor">Create List</a>
                         <a class="collapse-item" href="shop.php">Shop</a>
                         <a class="collapse-item" href="upload_file.php">Upload File</a>
                     </div>

@@ -1,28 +1,5 @@
-<?php
-include "function_here.php";
-function dbConnecting()
-{
-    // $hostname = 'localhost';
-    // $username = 'root';
-    // $password = '';
-    // $database = 'delinepal';
-    // $conn = mysqli_connect($hostname, $username, $password, $database);
-
-
-    //   server user name 
-      $servername = 'localhost';
-    $username = 'delinepal_user';
-    $password = 'QZIl@hF!2th[';
-    $dbname = 'delinepal_delinepal';
-      $conn = mysqli_connect($servername, $username, $password, $dbname);
-    // echo "db connection in progresss";
-    if (!$conn) {
-        echo "unable to connect database";
-        die();
-    } else {
-        return $conn;
-    }
-}
+<?php 
+include "connect_server.php"; 
 
 if(isset($_POST["vendor_change_password"])){
     $newPass = md5($_POST['vendor_change_password']);
@@ -58,4 +35,5 @@ if(isset($_POST["vendor_change_password"])){
      }
    }
 }
+
 ?>
