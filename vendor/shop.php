@@ -10,7 +10,7 @@ include "header.php";
 <div class="topbar pt-3 mb-2"><a class="btn"><i class="bi bi-list p-3" id="colpsCustom"></i></a><span class="fw-bold mt-3">SHOP</span>
 </div>
     <?php 
-    $lists = [];
+    $lists =array();
     $select_list_Qry = "SELECT vendor_fav_list.`id`, `vendor_email`, `list_name`, `create_date` FROM `vendor_fav_list` WHERE `vendor_email` ='".$_SESSION["vendor_email"]."';";
     $lists = get_Table_Data($select_list_Qry);
     echo'<div class="d-flex" style="width:100%;gap:1rem;">';
@@ -233,7 +233,7 @@ $(document).ready(function(){
         var da = JSON.parse(data);
         if(da.status_code==200){
         var html = '';
-            var user_type='<?php  echo strtolower(give_user_type($_SESSION['vendor_email']));?>';
+            var user_type='<?php  echo strtolower($_SESSION['vendor_email']);?>';
             jQuery.each(da.data, function (i, da) {
             var image = da.img_path + da.img;
         html += '<tr>'
