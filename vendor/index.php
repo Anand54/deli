@@ -1,6 +1,8 @@
 <?php
  include 'header.php';
-  ?>
+ $vemail = $_SESSION['vendor_email']; 
+ $list_counted = list_count($vemail);
+?>
 <div class="topbar pt-3 mb-2" ><a class="btn"><i class="bi bi-list p-3" id="colpsCustom"></i></a><span class="fw-bold mt-3">Products</span>
 </div>
 <div style="overflow:auto;" class="font_size_in_mobile">
@@ -29,14 +31,14 @@
         <tbody class="vendor_table">
             <?php 
               $conn = dbConnecting();
-            $select="select pCode,pGroup,product,availableQty,rate from product inner join category on product.categoryId=category.id";
+            $select="select product.id as productID,pCode,pGroup,product,availableQty,rate from product inner join category on product.categoryId=category.id";
             $passSelect=mysqli_query($conn,$select);
             while($result=mysqli_fetch_assoc($passSelect)){
             ?>
             <tr>
                 <td>
                   <div class="form-check">
-                      <input class="form-check-input checkItem"  type="checkbox" id="flexCheckDefault">
+                      <input class="form-check-input checkItem"  type="checkbox" id="flexCheckDefault" data-productID="<?php echo $result['productID']; ?>">
                     </div>
                 </td>
                 <td>
@@ -56,65 +58,61 @@
                 </td>
                  <td>
                 <?php echo $result['rate']; ?>
-                   
                 </td>
             </tr>
             <?php
-        
-
             }
-            
             ?>
         </tbody>
     </table>
 </div>
 
 <script>
-// $(document).ready(function(){
-//     $("#saveBtn").click(function(){
-//         if(list_counted>=5){
-//            alert("You can create only 5 Favorite List.")
-//         }else{
-//             var products_id=[];
-//     var count=0;
-//     $('.checkItem').each(function(){
-//     if($(this).prop("checked")){
-//         products_id.push($(this).attr('data-productID'));
-//         count++;
-//         }
-//     });
-//     console.log(products_id);
-//     var favlist = $('#favlist').val();
-//     var vendorEmail = $('#vendorEmail').val();
-//       if(favlist==""){
-//           alert("Please fill the form Properly");
-//       }
-//       else if(count<=3){
-//         alert("Please select more then 3 item");  
-//       }
-//       else{
-//         $.ajax({
-//         url: "../../assets/library/vendorControl.php",
-//         method: "POST",
-//         data: {create_list:favlist,products_id:products_id,vendorEmail:vendorEmail},
-//         success: function (data) {
-//         var da = JSON.parse(data);
-//         if(da.status_code ==200){
-//         alert("List Created Successfully");
-//         location.reload();
-//         }
-//         else if(da.status_code ==55){
-//           alert("List name already exists.");   
-//         }
-//         else{
-//             alert("Error processing request. Please try again.");
-//         }
-//         }
-//       });
-//       }
-//         }
-//     });
-// });
+$(document).ready(function(){
+    $("#saveBtn").click(function(){
+        if(<?php echo $list_counted;?>>=5){
+           alert("You can create only 5 Favorite List.")
+        }else{
+        var products_id=[];
+        var count=0;
+    $('.checkItem').each(function(){
+    if($(this).prop("checked")){
+        products_id.push($(this).attr('data-productID'));
+        count++;
+        }
+    });
+    // console.log(products_id);
+    var favlist = $('#favlist').val();
+    var vendorEmail = '<?php echo $_SESSION['vendor_email'] ?>';
+      if(favlist==""){
+          alert("Please fill the form Properly");
+      }
+      else if(count<=3){
+        alert("Please select more then 3 item");  
+      }
+      else{
+        $.ajax({
+        url: "assets/library/create_list_control.php",
+        method: "POST",
+        data: {create_list:favlist,products_id:products_id,vendorEmail:vendorEmail},
+        success: function (data) {
+        var da = JSON.parse(data);
+        if(da.status_code ==200){
+        alert("List Created Successfully");
+        location.reload();
+        }
+        else if(da.status_code ==55){
+          alert("List name already exists.");   
+        }
+        else{
+            alert("Error processing request. Please try again.");
+        }
+        }
+      });
+      }
+        }
+    });
+});
 </script>
 <?php
 include "footer.php"; 

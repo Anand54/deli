@@ -13,16 +13,7 @@ CREATE TABLE IF NOT EXISTS admin(
     `remarks` varchar(255)
     );
     INSERT INTO `admin`(`id`,`active_state`,`username`, `email`, `admin_pass`,`superAdmin`, `remarks`) VALUES (1,1,'admin','admin@gmail.com','admin23@#$',1,'active');
-
-CREATE TABLE IF NOT EXISTS users(
-    id bigint primary key,
-    username varchar(255),
-    email varchar(255),
-    phone varchar(255),
-    pass varchar(255),
-    remarks varchar(255)
-    );
-    
+   
 CREATE TABLE IF NOT EXISTS category(
       id bigint PRIMARY KEY,
       pGroup varchar(255) NOT NULL,
@@ -41,6 +32,23 @@ CREATE TABLE IF NOT EXISTS product(
    FOREIGN KEY (categoryID) REFERENCES category(id)
 );
 
+CREATE TABLE `vendor_fav_list` (
+  `id` bigint PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `vendor_email` varchar(255) NOT NULL,
+  `list_name` varchar(255) DEFAULT NULL,
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `remarks` varchar(1000) DEFAULT NULL
+);
+
+
+CREATE TABLE `vendor_fav_list_item` (
+  `id` bigint PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `fav_list_id` bigint NOT NULL,
+  `product_id` bigint NOT NULL,
+  `remarks` varchar(255) DEFAULT NULL,
+  FOREIGN KEY (`fav_list_id`) REFERENCES `vendor_fav_list` (`id`),
+  FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+);
 
 CREATE TABLE `vendor_users` (
   `id` bigint PRIMARY KEY NOT NULL,
