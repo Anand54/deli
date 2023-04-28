@@ -380,8 +380,9 @@ $(document).ready(function(){
 
 
  $(document).on('keyup',".active_input",function(){
-     var qty = $(this).val();
-     var unit_price=$(this).attr('data-unitPrice');
+     var qty =$(this).val();
+     var unit_price=Math.trunc($(this).attr('data-unitPrice'));
+    
      var discount="<?php echo $discountPercent; ?>";
     //  alert(discount);
     var a = Math.trunc(((qty*unit_price)/100)*discount);
@@ -508,7 +509,7 @@ var discountPercent='<?php echo $discountPercent; ?>';
   else{
         if(confirm("Are you sure you want to cart the selected item ?")){
         $.ajax({
-        url: "../../assets/library/vendor_checkout.php",
+        url: "assets/library/vendor_checkout.php",
         method: "POST",
         data: {vendor_cartouts:cartouts,vendorEmail:vendorEmail,discountPercent:discountPercent},
         success: function (data) {
@@ -755,6 +756,18 @@ include "footer.php";
         });
          $("#table_id").children("caption").css("display","none");
          $("#table_id_info").css("display", "none");
+
+
+
+    //          $('.checkItem').on('click',function(){
+    //     if($('.checkItem:checked').length == $('.checkItem').length){
+    //         $('#check_out_all').prop('checked',true);
+    //     }else{
+    //         $('#check_out_all').prop('checked',false);
+    //     }
+        
+    
+    // });
 
 </script>
 
