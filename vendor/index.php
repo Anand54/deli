@@ -27,7 +27,12 @@
             </tr>
         </thead>
         <tbody class="vendor_table">
-            
+            <?php 
+              $conn = dbConnecting();
+            $select="select pCode,pGroup,product,availableQty,rate from product inner join category on product.categoryId=category.id";
+            $passSelect=mysqli_query($conn,$select);
+            while($result=mysqli_fetch_assoc($passSelect)){
+            ?>
             <tr>
                 <td>
                   <div class="form-check">
@@ -35,26 +40,29 @@
                     </div>
                 </td>
                 <td>
-                 aaaa
+                 <?php echo $result['pGroup']; ?>
                 </td>
                 <td>
-                    bbbbbb
+                <?php echo $result['pCode']; ?>
                 </td>
                 <td>
-                   cccccc
+                   <?php echo $result['product']; ?>
                 </td>
                 <td>
-                    dddddd
+                <?php echo $result['availableQty']; ?>
                 </td>
                  <td>
-                  eeeeee
+                  <?php echo $result['rate']; ?>
                 </td>
                  <td>
-                   ffffff
+                <?php echo $result['rate']; ?>
+                   
                 </td>
             </tr>
             <?php
-            
+        
+
+            }
             
             ?>
         </tbody>
