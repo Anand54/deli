@@ -124,19 +124,19 @@ $("#save-data").click(function(){
     </thead>
     <tbody>
             <?php
-            $query = "SELECT products.`id`,`category_name`, `product_code`, `product_name`, `actual_Price`, `sell_Price` FROM `products`
-            INNER JOIN category on category.category_id = products.category_id";
+            $query = "SELECT pGroup,pCode,product,rate FROM `product`
+            INNER JOIN category on product.categoryId = category.id";
             $conn = dbConnecting();
             $req = mysqli_query($conn, $query) or die(mysqli_error($conn));
+            $i = 1;
             if (mysqli_num_rows($req) > 0) {
-              $i = 1;
               while ($data = mysqli_fetch_assoc($req)) { ?>
       <tr>
-        <td><?php echo $data["id"]; ?></td>
-        <td><?php echo $data["category_name"]; ?></td>
-        <td><?php echo $data["product_code"]; ?></td>
-        <td><?php echo $data["product_name"]; ?></td>
-        <td><?php echo intval($data["sell_Price"]); ?></td>
+        <td><?php echo $i ?></td>
+        <td><?php echo $data["pGroup"]; ?></td>
+        <td><?php echo $data["pCode"]; ?></td>
+        <td><?php echo $data["product"]; ?></td>
+        <td><?php echo intval($data["rate"]); ?></td>
       </tr>
             <?php
                 $i++;
@@ -148,7 +148,7 @@ $("#save-data").click(function(){
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="export-btn">Dounload</button>
+        <button type="button" class="btn btn-primary" id="export-btn">Download</button>
       </div>
     </div>
   </div>
