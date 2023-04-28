@@ -188,7 +188,7 @@ $(document).ready(function(){
         }
         else{
             $.ajax({
-            url: "../../assets/library/vendorControl.php",
+            url: "assets/library/vendor_checkout.php",
             method: "POST",
             data: {delete_list:fav_list_id,vendor_email:vendor_email},
             success: function (data) {
@@ -224,7 +224,7 @@ $(document).ready(function(){
     var vendorID = $(this).attr("data-fav_id");    
     var vendor_email = $(this).attr("data-vendor_email");
     $.ajax({
-        url: "../../assets/library/vendorControl.php",
+        url: "assets/library/vendor_checkout.php",
         method: "POST",
         data: {get_fav_list:vendorID,vendor_email:vendor_email},
         datatype: "JSON",
@@ -547,7 +547,7 @@ var discountPercent='<?php echo $discountPercent; ?>';
     }
     else{
         $.ajax({
-        url: "../../assets/library/vendor_checkout.php",
+        url: "assets/library/vendor_checkout.php",
         method: "POST",
         data: {vendor_cartOut_Item:vendorEmail,cartouts:cartouts},
         success: function (data) {
@@ -625,7 +625,7 @@ $(document).on('click','#check_outBtn',function(){
     }else{
   if(confirm("Are you sure you want to place the order ?")){
         $.ajax({
-        url: "../../assets/library/vendor_checkout.php",
+        url: "assets/library/vendor_checkout.php",
         method: "POST",
         data: {vendor_checkout:checkouts,vendorEmail:vendorEmail,discountPercent:discountPercent},
         success: function (data) {
