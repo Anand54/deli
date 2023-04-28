@@ -136,6 +136,26 @@ function list_count($vemail){
     return $count;
 }
 
+function run_delete_query($sql){
+    $conn = dbConnecting();
+    $req = mysqli_query($conn,$sql);
+    if($req){
+        // maintain_history_table($sql, $status);
+        //success
+        // echo "query executed";
+        $row = mysqli_affected_rows($conn);
+        // echo "affected Row : ".$row;
+        if($row>=1){
+            return $row;
+        }else{
+            // echo mysqli_error($conn);
+            return 0;
+        }
+    }else{
+        //failed
+    }
+}
+
 function give_response($code)
 {
 
@@ -195,4 +215,6 @@ function give_response($code)
             break;
     }
 }
+
+
 ?>

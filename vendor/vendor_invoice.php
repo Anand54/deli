@@ -1,5 +1,5 @@
 <?php
-include '../../assets/library/library.php';
+include 'assets/library/connect_server.php';
     $vendor_company_name="";
     $vendor_contact="";
     $vendor_address="";
@@ -27,6 +27,7 @@ include '../../assets/library/library.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Invoice</title>
+	<link rel="icon" type="images/ico" href="favicon.ico">
 </head>
 <style>
     .invoiceDecoration{
@@ -75,7 +76,7 @@ include '../../assets/library/library.php';
 						</div>
 						<br/>
 						<div class="table-responsive">
-							<table class="table" style-"font-size:1px">
+							<table class="table" style="font-size:15px">
 								<thead>
 									<tr>
 										<th>
@@ -113,12 +114,12 @@ include '../../assets/library/library.php';
 								</thead>
 								<tbody>
 								    <?php 
-								    $select_item = "SELECT  `category_name`,`product_code`, `product_name`,`vendor_checkout_id`, `product_id`, `order_quantity`, `discountPercent`, `sales_rate`, `total_amt`, `discountAmount`, `total_after_discount` FROM `vendor_checkout_items` vci
-                                        INNER JOIN vendor_checkout vc ON vc.id = vci.vendor_checkout_id
-                                        INNER JOIN products p ON p.id = vci.product_id
-                                        INNER JOIN category c on c.category_id = p.category_id
+								    $select_item = "SELECT vci.`id`, `pGroup`, `pCode`, `product`, `vendor_checkout_id`, `product_id`, `order_quantity`, `discountPercent`, `sales_rate`, `total_amt`, `discountAmount`, `total_after_discount` FROM `vendor_checkout_items` vci
+										INNER JOIN vendor_checkout vc ON vc.id = vci.vendor_checkout_id
+										INNER JOIN product p ON p.id = vci.product_id
+										INNER JOIN category c on c.id = p.categoryID
                                         WHERE `vendor_checkout_id`='$v_id' AND `vendor_email` ='$v_email';";
-                                        $conn = connectdb();
+                                        $conn = dbConnecting();
                                         $req_data = mysqli_query($conn,$select_item)or die(mysqli_error($conn));
                                         $totalSum=0.0;
                                         if (mysqli_num_rows($req_data) > 0) {
@@ -138,11 +139,11 @@ include '../../assets/library/library.php';
 										<!--</td>-->
 										<td>
 											
-										   	<?php echo $data['product_code']; ?>
+										   	<?php echo $data['pCode']; ?>
 											
 										</td>
 										<td class="text-start">
-										<?php echo $data['product_name']; ?>
+										<?php echo $data['product']; ?>
 											
 										</td>
 										<td>
@@ -174,12 +175,6 @@ include '../../assets/library/library.php';
 							</strong>
 							</td>
 							</tr>
-							<!--<tr>-->
-										<!--<td class="text-end" colspan="7"><strong>Vat(13%)</strong></td>-->
-										<!--<td><strong>-->
-										<!--		Not Included-->
-										<!--	</strong></td>-->
-							<!--		</tr>-->
 									<tr>
 										<td class="text-end" colspan="7">
 											<span><strong>Total: Rs.</strong></span>
