@@ -125,6 +125,17 @@ function get_Table_Data($sql)
   }
 }
 
+function list_count($vemail){
+    $sql = "SELECT `list_name` FROM `vendor_fav_list` WHERE `vendor_email` = '$vemail';";//echo $sql;
+    $data = get_Table_Data($sql);
+    // var_dump($data);
+    $count=0;
+    if($data!=0){
+        $count = count($data); //echo "count is ".$count;
+    }
+    return $count;
+}
+
 function give_response($code)
 {
 

@@ -38,13 +38,12 @@ include "header.php";
                 <th class="col-1">Quantity</th>
                 <th class="col-1">Discount(<?php echo $discountPercent ?>%)</th>
                 <th class="col-1">Total</th>
-                <th class="col-1">Image</th>
             </tr>
         </thead>
         <tbody class="vendor_table">
              <?php
-            $checkoutQry = "SELECT  products.`id` as productID,`category_name`,`product_code`,`product_name`, `actual_Price`, `sell_Price`,`retailer_price`, `wholesaler_price`, `dealer_price`, `img_path`, `primary_image`, `secondary_image` FROM `products` 
-            INNER join category on category.category_id = products.category_id";
+            $checkoutQry = "SELECT product.`id`,`pGroup`, `categoryID`, `pCode`, `product`, `unit`, `availableQty`, `rate`, `pStatus` FROM `product`
+            INNER JOIN category on category.id = product.categoryID";
             $conn = dbConnecting();
             $req = mysqli_query($conn, $checkoutQry) or die(mysqli_error($conn));
             if (mysqli_num_rows($req) > 0) {
@@ -54,33 +53,29 @@ include "header.php";
             <tr class="clsTr">
                 <td>
                   <div class="form-check text-center">
-                      <input class="form-check-input checkItem" data-productID="<?php echo $data['productID'] ?>" data-vendorEmail="<?php echo $_SESSION["vendor_email"] ?>"  type="checkbox" id="flexCheckDefault">
+                      <input class="form-check-input checkItem" data-productID="<?php echo $data['id'] ?>" data-vendorEmail="<?php echo $_SESSION["vendor_email"] ?>"  type="checkbox" id="flexCheckDefault">
                     </div>
                 </td>
                 <td>
-                    <?php echo $data["category_name"]; ?>
+                    <?php echo $data["pGroup"]; ?>
                 </td>
                 <td>
-                    <?php echo $data["product_code"]; ?>
+                    <?php echo $data["pCode"]; ?>
                 </td>
                 <td>
-                    <?php echo $data["product_name"]; ?>
+                    <?php echo $data["product"]; ?>
                 </td>
                 <td>
-                    <?php echo intval($data["sell_Price"]); ?>
+                    <?php echo intval($data["rate"]); ?>
                 </td>
                 <td class="col-1 quantity_input_container">
-                    <input type="text" class="form-control quantity"  data-unitPrice="<?php echo $data["sell_Price"];?>"  required>
+                    <input type="text" class="form-control quantity"  data-unitPrice="<?php echo $data["rate"];?>"  required>
                 </td>
                 
                 <td></td>
                 <td id="total">
                     <input type="text" class="form-control totalInput">
-                    </td>
-                 <td>
-                   <a  data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="<?php echo '../../'.$data['img_path'].$data['primary_image']; ?>"  data-img="<?php echo $data['img_path'].$data['primary_image']; ?>" class="w-100 popupImg"></a>
                 </td>
-                <!--<td><input type="text" id="abc"></td>-->
             </tr>
             <?php
             }
