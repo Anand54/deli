@@ -1,5 +1,5 @@
 <?php
-include 'assets/library/connect_server.php';
+include 'library/connect_server.php';
     $vendor_company_name="";
     $vendor_contact="";
     $vendor_address="";

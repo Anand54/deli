@@ -87,11 +87,30 @@ function check_if_exist($sql)
   mysqli_close($conn);
 }
 
+function get_Table_Data($sql)
+{
+  $conn = dbConnecting();
+  $req = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+  if (!$req) {
+    return 0;
+  } else if (mysqli_num_rows($req) != 0) {
+    $list = [];
+    $i = 1;
+    while ($data = mysqli_fetch_assoc($req)) {
+      $list[$i] = $data;
+      $i = $i + 1;
+    }
+    return $list;
+  } else {
+    return 0;
+  }
+}
+
 function run_update_query($sql){
     $conn = dbConnecting();
     $req = mysqli_query($conn,$sql);
     if($req){
-        history_table($sql, true);
+        // history_table($sql, true);
         //success
         // echo "query executed";
         $row = mysqli_affected_rows($conn);

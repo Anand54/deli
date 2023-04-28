@@ -116,7 +116,7 @@ include "library/connect_server.php";
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Checkout</h6>
                         <a class="collapse-item" href="checkout.php">Checkout</a>
-                        <a class="collapse-item" href="delivered.php">Delivered List</a>
+                        <a class="collapse-item" href="order_close.php">Delivered List</a>
                     </div>
                 </div>
             </li>
