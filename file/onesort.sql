@@ -32,6 +32,13 @@ CREATE TABLE IF NOT EXISTS product(
    FOREIGN KEY (categoryID) REFERENCES category(id)
 );
 
+CREATE TABLE IF NOT EXISTS product_image(
+  id bigint PRIMARY KEY,
+  product_id bigint NOT NULL,
+  image_path varchar(255) NOT NULL,
+  image varchar(255) NOT NULL
+);
+
 CREATE TABLE `vendor_fav_list` (
   `id` bigint PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `vendor_email` varchar(255) NOT NULL,

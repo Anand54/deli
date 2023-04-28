@@ -92,8 +92,13 @@ include "library/connect_server.php";
                     <i class="bi bi-collection-fill"></i>
                     <span>API</span></a>
             </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="category.php">
+                    <i class="bi bi-collection-fill"></i>
+                    <span>Product</span></a>
+            </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="product.php">
+                <a class="nav-link" href="allproduct.php">
                     <i class="bi bi-collection-fill"></i>
                     <span>All Product</span></a>
             </li>
