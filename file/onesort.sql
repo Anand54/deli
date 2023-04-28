@@ -50,6 +50,32 @@ CREATE TABLE `vendor_fav_list_item` (
   FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
 );
 
+CREATE TABLE `vendor_checkout` (
+  `id` bigint PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `archived` tinyint(1) DEFAULT '0',
+  `vendor_email` varchar(255) NOT NULL,
+  `product_count` bigint NOT NULL,
+  `order_confirmed` tinyint(1) DEFAULT '0',
+  `process_completed` tinyint(1) DEFAULT '0',
+  `order_place_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `order_dispatched_date` date DEFAULT NULL,
+  `order_delivered_date` date DEFAULT NULL,
+  `remarks` varchar(1000) DEFAULT NULL
+);
+
+CREATE TABLE `vendor_checkout_items` (
+  `id` bigint PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `vendor_checkout_id` bigint NOT NULL,
+  `product_id` bigint NOT NULL,
+  `order_quantity` bigint NOT NULL,
+  `discountPercent` varchar(255) DEFAULT NULL,
+  `sales_rate` decimal(10,2) NOT NULL,
+  `total_amt` decimal(10,2) DEFAULT ((`order_quantity` * `sales_rate`)),
+  `discountAmount` decimal(10,2) GENERATED ALWAYS AS (((`total_amt` * `discountPercent`) / 100)),
+  `total_after_discount` decimal(10,2) GENERATED ALWAYS AS ((`total_amt` - `discountAmount`)),
+  `remarks` varchar(255) DEFAULT NULL
+);
+
 CREATE TABLE `vendor_users` (
   `id` bigint PRIMARY KEY NOT NULL,
   `active_state` tinyint(1) DEFAULT '1',

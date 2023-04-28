@@ -79,7 +79,7 @@ $("#save-data").click(function(){
        }
        else{
           $.ajax({
-          url: '../../assets/library/upload_from_excel.php',
+          url: 'assets/library/upload_from_excel.php',
           type: 'POST',
           data: {get_data_from_excel:excelcheckout,vendor_email:vendor_email,discountPercent:discountPercent},
           success: function(data) {
