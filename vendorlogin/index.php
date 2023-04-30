@@ -71,7 +71,7 @@ session_start();
             $_SESSION['vendor_email'] = $useremail;
             $_SESSION['login_status'] = 1;
             echo "success";
-            ?><script>window.location.href = "<?php echo BASE_URL; ?>vendor/order_history.php";</script>
+            ?><script>window.location.href = "<?php echo BASE_URL; ?>vendor/";</script>
  <?php
           } else {
             popMsg("Invalid or incorrect information. Please check and try again.");
