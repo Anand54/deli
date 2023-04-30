@@ -34,8 +34,9 @@ padding: 7px !important;
           </thead>
           <tbody>
             <?php
-            $query = "SELECT product.`id` as productID,`categoryID`, `pGroup`,`pCode`, `product`, `unit`, `availableQty`, `rate`, `pStatus` FROM `product`
-            INNER JOIN category on category.id = product.categoryID;";
+            $query = "SELECT product.`id` as productID,`categoryID`, `image_path`, `image`,`pGroup`,`pCode`, `product`, `unit`, `availableQty`, `rate`, `pStatus` FROM `product`
+                      INNER JOIN category on category.id = product.categoryID
+                      LEFT JOIN product_image PI ON PI.product_id = product.id;";
             $conn = dbConnecting();
             $req = mysqli_query($conn, $query) or die(mysqli_error($conn));
             if (mysqli_num_rows($req) > 0) {
@@ -61,7 +62,7 @@ padding: 7px !important;
                 <?php echo $data['availableQty']; ?>
               </td>
               <td>
-               <a href="#" class="imageup" data-bs-toggle="modal" data-productID="<?php echo $data['productID']; ?>" data-bs-target="#uploadImage"><i class="bi bi-pencil-square"></i></a>
+               <a href="#" class="imageup" data-bs-toggle="modal" data-productID="<?php echo $data['productID'];?>" data-path="<?php echo $data['image_path'].$data['image'];?>" data-bs-target="#uploadImage"><i class="bi bi-pencil-square"></i></a>
               </td>
             </tr>
             <?php
@@ -79,6 +80,12 @@ padding: 7px !important;
   $(".imageup").click(function () {// button class where button clicked
     var pid = $(this).attr("data-productID"); //attribute from button data-category
     $("#productId").attr("value", pid.trim());// where to show id
+
+    var image = $(this).attr("data-path"); //attribute from button data-category
+    $("#pImage").attr("src", image.trim());// where to show id
+
+    // var pid = $(this).attr("data-image"); //attribute from button data-category
+    // $("#productId").attr("value", pid.trim());// where to show id
   });
 </script>
 <!-- upload image Modal -->
@@ -94,6 +101,9 @@ padding: 7px !important;
            <input type="hidden" class="form-control" id="productId">
           <span class="input-group-text col-12" id="basic-addon1">
           <input type="file" class="form-control" id="imageUpload" name="imageUpload" onchange="upload_image()"></span>
+        </div>
+        <div>
+            <img id="pImage" class="w-50">
         </div>
       </div>
       <div class="modal-footer">
@@ -124,9 +134,15 @@ $(document).ready(function(){
         url: "library/image_control.php",
         method: "POST",
         data: { insert_product_name: imageUpload, productId:productId},
-        success: function () {
-          alert("Product update success");
-          location.reload();
+        success: function (data) {
+          var da = JSON.parse(data);
+          if(da.status_code==200){
+            alert("Image stored successfully.");
+            location.reload(true);
+          }
+          else if(da.status_code==201){
+            alert("Unable to store image");
+          }
         }
       });
     }
