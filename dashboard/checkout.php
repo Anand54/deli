@@ -62,12 +62,23 @@
   </tbody>
 </table>
 </div>
+
+<?php
+    $product_id="";
+    $select_discount_percent = "SELECT `product_id` FROM `vendor_checkout_items` WHERE `vendor_checkout_id` ='2';";
+    $datas = get_Table_Data($select_discount_percent);
+    foreach($datas as $data){
+     $product_id =$data['product_id'];   
+    }
+ ?>
+
 <script>
     $(document).ready(function(){
         $('.orderConfirm').click(function(){
             var checkoutID = $(this).attr('data-pID');
             var checkoutEmail = $(this).attr('data-email');
             var confirmByEmail = "<?php echo $_SESSION['adminemail']; ?>";
+            // alert(product_id);
             if(checkoutID==""||checkoutEmail==""){
                 alert("Some data not found");
             }
