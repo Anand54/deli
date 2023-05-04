@@ -135,7 +135,7 @@ include "header.php";
                     <th class="col-1">Quantity</th>
                     <th class="col-1">Discount(<?php echo $discountPercent ?>%)</th>
                     <th class="col-1">Total</th>
-                    <th class="col-1">Image</th>
+                    <!-- <th class="col-1">Image</th> -->
                     <!--<th class="col-1">Action</th>-->
                 </tr>
             </thead>
@@ -235,19 +235,19 @@ $(document).ready(function(){
         var html = '';
             var user_type='<?php  echo strtolower($_SESSION['vendor_email']);?>';
             jQuery.each(da.data, function (i, da) {
-            var image = da.img_path + da.img;
+            var image = da.image_path + da.image;
         html += '<tr>'
         html += '<td>'
         html += '<div class="form-check text-center">'
         html += '<input class="form-check-input checkItem" type="checkbox" id="flexCheckDefault" data-productID="'+da.id+'">'
         html += '</div>'
         html += '</td>'
-        html += '<td>'+da.category_name+'</td>'
-        html += '<td>'+da.product_code+'</td>'
-        html += '<td>'+da.product_name+'</td>'
-        html += '<td>'+da.sell_Price+' </td>'
+        html += '<td>'+da.pGroup+'</td>'
+        html += '<td>'+da.pCode+'</td>'
+        html += '<td>'+da.product+'</td>'
+        html += '<td>'+da.rate+' </td>'
         html += '<td class="col-1 quantity_input_container">'
-        html += '<input type="text" class="form-control quantity" data-unitPrice="'+da.sell_Price+'" disabled>'
+        html += '<input type="text" class="form-control quantity" data-unitPrice="'+da.rate+'" disabled>'
         html += '</td>'
         html += '<td></td>'
         html += '<td id="total">'
@@ -564,19 +564,18 @@ var discountPercent='<?php echo $discountPercent; ?>';
                 html += '<input class="form-check-input CartOut_checkout" type="checkbox" id="flexCheckDefault" data-pid="'+da.product_id+'" data-quantity="'+da.quantity+'" checked>'
                 html += '</div>'
                 html += '</td>'
-                html += '<td>'+da.category_name+'</td>'
-                html += '<td>'+da.product_code+'</td>'
-                html += '<td>'+da.product_name+'</td>'
-                html += '<td>'+parseInt(da.sell_Price)+'</td>'
+                html += '<td>'+da.pGroup+'</td>'
+                html += '<td>'+da.pCode+'</td>'
+                html += '<td>'+da.product+'</td>'
+                html += '<td>'+parseInt(da.rate)+'</td>'
                 html += '<td class="col-1 quantity_input_container1">'
-                html += '<input type="text" class="form-control cartout_quantity1 active_input1" data-unitPrice1="'+da.sell_Price+'" value="'+da.quantity+'">'
+                html += '<input type="text" class="form-control cartout_quantity1 active_input1" data-unitPrice1="'+da.rate+'" value="'+da.quantity+'">'
                 html += '</td>'
-                html += '<td>'+Math.trunc((((da.sell_Price*da.quantity)/100)*da.discount))+'</td>'
+                html += '<td>'+ Math.trunc((((da.rate*da.quantity)/100)*da.discount))+'</td>'
                 html += '<td id="total1">'
-                html += '<input type="text" class="form-control totalInput1 total_input1" value="'+Math.trunc(((da.sell_Price*da.quantity)-(((da.sell_Price*da.quantity)/100)*da.discount)))+'" readonly>'
+                html += '<input type="text" class="form-control totalInput1 total_input1" value="'+Math.trunc(((da.rate*da.quantity)-(((da.rate*da.quantity)/100)*da.discount)))+'" readonly>'
                 html += '</td>'
                 html += '<td>'
-                html += '<a><img src="../../'+image+'" class="w-100 popupImg"></a>'
                 html += '</td>'
                 html += '</tr>';
               });
@@ -756,18 +755,6 @@ include "footer.php";
         });
          $("#table_id").children("caption").css("display","none");
          $("#table_id_info").css("display", "none");
-
-
-
-    //          $('.checkItem').on('click',function(){
-    //     if($('.checkItem:checked').length == $('.checkItem').length){
-    //         $('#check_out_all').prop('checked',true);
-    //     }else{
-    //         $('#check_out_all').prop('checked',false);
-    //     }
-        
-    
-    // });
 
 </script>
 

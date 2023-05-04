@@ -1,6 +1,183 @@
 <?php
-include 'library.php';
+include "connect_server.php";
+//get list start here
 
+if(isset($_POST['get_fav_list'])){
+    $list_id=$_POST['get_fav_list'];
+    $vendor_email=$_POST['vendor_email'];
+    $data = get_list_data($list_id,$vendor_email);
+    $response=array('status_code'=>200,'message'=>'success','data'=>$data);
+    echo json_encode($response);
+}
+
+function get_list_data($list_id,$vendor_email){
+    $check_exist="SELECT IF( EXISTS (SELECT * FROM `vendor_fav_list` WHERE `id`='$list_id' AND `vendor_email`='$vendor_email'),1,0)as result";
+    $check_exist2="SELECT IF( EXISTS (SELECT * FROM `vendor_fav_list_item` WHERE `fav_list_id`='$list_id'),1,0)as result";
+    if(check_if_exist($check_exist) && check_if_exist($check_exist)){
+        //return of data in list
+    $select_query="SELECT p.id,c.`pGroup`,p.pCode,p.product,p.rate,`image_path`, `image` FROM `vendor_fav_list_item` fli
+    INNER JOIN vendor_fav_list vfs on vfs.id=fli.fav_list_id
+    INNER JOIN product p on p.id=fli.product_id
+    INNER JOIN category c on c.id=p.categoryID
+    LEFT JOIN product_image pi on pi.product_id = p.id
+    WHERE vfs.id=$list_id;";
+    $data=get_Table_Data($select_query);
+    if($data!=0){
+        return $data;
+    }else{
+        //
+        return 0;
+    }
+    }else{
+        //no data found
+        return 0;
+    }
+}
+// var_dump(get_list_data('3','ananda.globaltech@gmail.com'));
+//delete checkout list
+if(isset($_POST['delete_order_list'])){
+    $list_id=$_POST['delete_order_list'];
+    $_email=$_POST['vendor_email'];
+    $response=remove_list($list_id,$_email);
+    echo json_encode($response);
+}
+// $list_id=1;
+// $_email='sangin.globaltech@gmail.com';
+// echo json_encode(remove_list($list_id,$_email));
+function remove_list($list_id,$_email){
+    $response='';
+    $check_exist="SELECT IF ( EXISTS (SELECT * FROM `vendor_checkout` WHERE `vendor_email`='$_email' AND `id`=$list_id),1,0) as result;";
+    if(check_if_exist($check_exist)){
+        // echo "List exist";
+        $check_exist="SELECT IF ( EXISTS (SELECT * FROM `vendor_checkout_items` WHERE `vendor_checkout_id`=$list_id),1,0) as result;";
+        if(check_if_exist($check_exist)){
+            // echo "Sub List exist";
+            $del_qry="DELETE FROM `vendor_checkout_items` WHERE `vendor_checkout_id`=$list_id";
+            if(run_delete_query($del_qry)!=0){
+                //delete sub list succes
+                //now delete main list
+            $del_qry="DELETE FROM `vendor_checkout` WHERE `vendor_email`='$_email' AND `id`=$list_id";
+             if(run_delete_query($del_qry)!=0){
+                 $response=array(
+                     'status_code'=>'200',
+                     'message'=>'success',
+                     'message_2'=>'delete success'
+                     );
+             }else{
+                 $response=array(
+                     'status_code'=>'200',
+                     'message'=>'success',
+                     'message_2'=>'sublist deleted but cannot delete main list'
+                     );
+             }
+            }else{
+                $response=array(
+                     'status_code'=>'201',
+                     'message'=>'error',
+                     'message_2'=>'cannot delete sub list'
+                     );
+            }
+        }else{
+            // echo "Sub list not exist so delete list only";
+             $del_qry="DELETE FROM `vendor_checkout` WHERE `vendor_email`='$_email' AND `id`=$list_id";
+             if(run_delete_query($del_qry)!=0){
+                 $response=array(
+                     'status_code'=>'200',
+                     'message'=>'success',
+                     'message_2'=>'delete success'
+                     );
+             }else{
+                 $response=array(
+                     'status_code'=>'201',
+                     'message'=>'error',
+                     'message_2'=>'cannot delete list'
+                     );
+             }
+        }
+    }else{
+        // echo "list not exist";
+        $response=array(
+                     'status_code'=>'201',
+                     'message'=>'error',
+                     'message_2'=>'list doesnot exist'
+                     );
+    }
+    return $response;
+}
+
+
+//delete fav_list
+if(isset($_POST['delete_list'])){
+    $list_id=$_POST['delete_list'];
+    $_email=$_POST['vendor_email'];
+    $response=remove_fav_list($list_id,$_email);
+    echo json_encode($response);
+}
+
+// echo json_encode(remove_fav_list($list_id,$_email));
+function remove_fav_list($list_id,$_email){
+    $response='';
+    $check_exist="SELECT IF ( EXISTS (SELECT * FROM `vendor_fav_list` WHERE `vendor_email`='$_email' AND `id`=$list_id),1,0) as result;";
+    if(check_if_exist($check_exist)){
+        // echo "List exist";
+        $check_exist="SELECT IF ( EXISTS (SELECT * FROM `vendor_fav_list_item` WHERE `fav_list_id`=$list_id),1,0) as result;";
+        if(check_if_exist($check_exist)){
+            // echo "Sub List exist";
+            $del_qry="DELETE FROM `vendor_fav_list_item` WHERE `fav_list_id`=$list_id";
+            if(run_delete_query($del_qry)!=0){
+                //delete sub list succes
+                //now delete main list
+            $del_qry="DELETE FROM `vendor_fav_list` WHERE `vendor_email`='$_email' AND `id`=$list_id";
+             if(run_delete_query($del_qry)!=0){
+                 $response=array(
+                     'status_code'=>'200',
+                     'message'=>'success',
+                     'message_2'=>'delete success'
+                     );
+             }else{
+                 $response=array(
+                     'status_code'=>'200',
+                     'message'=>'success',
+                     'message_2'=>'sublist deleted but cannot delete main list'
+                     );
+             }
+            }else{
+                $response=array(
+                     'status_code'=>'201',
+                     'message'=>'error',
+                     'message_2'=>'cannot delete sub list'
+                     );
+            }
+        }else{
+            // echo "Sub list not exist so delete list only";
+             $del_qry="DELETE FROM `vendor_fav_list` WHERE `vendor_email`='$_email' AND `id`=$list_id";
+             if(run_delete_query($del_qry)!=0){
+                 $response=array(
+                     'status_code'=>'200',
+                     'message'=>'success',
+                     'message_2'=>'delete success'
+                     );
+             }else{
+                 $response=array(
+                     'status_code'=>'201',
+                     'message'=>'error',
+                     'message_2'=>'cannot delete list'
+                     );
+             }
+        }
+    }else{
+        // echo "list not exist";
+        $response=array(
+                     'status_code'=>'201',
+                     'message'=>'error',
+                     'message_2'=>'list doesnot exist'
+                     );
+    }
+    return $response;
+}
+
+
+// checkout part start here
 if(isset($_POST['vendor_checkout'])){
     //write code for checkout
     $_data_array=$_POST['vendor_checkout'];
@@ -30,7 +207,7 @@ function insert_vendor_checkouts($_data_array,$_email,$discountPercent){
                 $da=explode('#',$data);//separate product and quantity
                 $product_id = $da[0];
                 $quantity = $da[1];
-                $check_query = "SELECT IF( EXISTS ( SELECT * FROM `products` WHERE `id`=$product_id),1,0) as result;";
+                $check_query = "SELECT IF( EXISTS ( SELECT * FROM `product` WHERE `id`=$product_id),1,0) as result;";
                 if(check_if_exist($check_query)){
                     // echo "product id ".$product_id." exists.<br>";
                     $id=get_primary_id('vendor_checkout_items');
@@ -101,13 +278,13 @@ function insert_vendor_checkouts($_data_array,$_email,$discountPercent){
 
 
 function give_sales_rate($product_id,$_email){
-    $check_exist="SELECT IF (EXISTS (SELECT `sell_Price` FROM products WHERE `id` = '$product_id'),1,0) as result;";
+    $check_exist="SELECT IF (EXISTS (SELECT `rate` FROM product WHERE `id` = '$product_id'),1,0) as result;";
     if(check_if_exist($check_exist)){
-        $get_data_qry="SELECT  `actual_Price`, `sell_Price` FROM `products` WHERE `id` ='$product_id';";
+        $get_data_qry="SELECT  `rate` FROM `product` WHERE `id` ='$product_id';";
         $data = get_Table_Data($get_data_qry);
         $price='';
         foreach ($data as $da){
-        $price = $da['sell_Price'];
+        $price = $da['rate'];
         }
         return $price;
         
@@ -138,11 +315,6 @@ $response='';
             $delete_qry = "DELETE FROM `vendor_cartOut` WHERE `vendor_email` ='$vendorEmail';"; //echo $delete_qry;
             $delete_req = mysqli_query($con, $delete_qry);
             if($delete_req){
-                // $response=array(
-                // 'status_code'=>'200',
-                // 'message'=>'Success',
-                // 'data' => $delete_req
-                // );
             $_id=0;
             foreach ($vendor_data as $data){
             $id=$id+$_id;
@@ -211,14 +383,11 @@ if(isset($_POST['vendor_cartOut_Item'])){
         $v_select_productID = $da[0];
         $ids=$ids.",".$da[0];
      }
-
-    
     $check_query = "SELECT IF (EXISTS (SELECT * FROM `vendor_cartOut` WHERE `product_id` in ($ids) AND `vendor_email` ='$v_email'),1,0) as result;"; //check user exist or not
-  
     if(check_if_exist($check_query)){
-        $select_cartout_id ="SELECT vco.`product_id`, `product_code`,`category_name`, `product_name`, `specification`, `actual_Price`, `sell_Price`,`img_path`, `primary_image`,`quantity`, `discount` FROM `vendor_cartOut` vco 
-            INNER JOIN `products` p ON p.id = vco.product_id 
-            INNER JOIN `category` c ON c.category_id = p.category_id
+        $select_cartout_id ="SELECT vco.`product_id`, `pCode`,`pGroup`, `product`,`rate`,`quantity`,`discount` FROM `vendor_cartOut` vco 
+            INNER JOIN `product` p ON p.id = vco.product_id 
+            INNER JOIN `category` c ON c.id = p.categoryID
             WHERE product_id in ($ids) AND `vendor_email` = '$v_email';";
           
             
@@ -246,6 +415,4 @@ if(isset($_POST['vendor_cartOut_Item'])){
     // }
     echo json_encode($response);
 }
-
-// cartout-----------------------------------------------------------------------------------------------------------------------
-?>
+ ?>

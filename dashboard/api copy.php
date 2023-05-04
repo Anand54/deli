@@ -1,11 +1,28 @@
+<?php 
+include "header.php"; 
+?>
+<div class="p-3">
+    <div class="text-center">
+        <h3>Input API</h3>
+    </div>
+    <form action="#" method="post" enctype="multipart/form-data">
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">API</span>
+            <input type="text" class="form-control" id="inputApi" name="inputApi">
+        </div>
+        <button type="submit" class="btn btn-success" name="submitBtn" id="submitBtn">Submit</button>
+    </form>
+</div>
+
 <?php
 // include "library/connect_server.php";
-include "header.php";
 
-$url = 'http://myomsapi.globaltechsolution.com.np:802/api/MasterList/StockReportApp?DbName=demospec01&BranchCode';
-
-$data1 = apiCal($url);
-inject_api_Data($data1);
+if (isset($_POST['submitBtn'])) {
+    $url = trim($_POST['inputApi']);
+    echo "<br>Submit clicked with api : " . $url;
+    $data1 = apiCal($url);
+    inject_api_Data($data1);
+}
 
 function inject_api_Data($data1)
 {
@@ -34,21 +51,24 @@ function inject_api_Data($data1)
                 die();
             } else {
                 // echo "Data inserted <hr>";
-                $product_id = get_primary_id("product");
-                $prepared_product_insert_query = "INSERT INTO `product`(`id`,`categoryID`,`pCode`, `product`, `unit`, `availableQty`, `rate`, `pStatus`) VALUES ('$product_id','$cat_id','$code','$product','$unit','$balanceQty','$rate','1');";
-                if (!run_insert_query($prepared_product_insert_query)) {
-                    echo "Data insert Stopped Due to some conflict";
-                    die();
-                } else {
-                    echo "Data inserted <hr>";
-                }
+            $product_id = get_primary_id("product");
+            $prepared_product_insert_query = "INSERT INTO `product`(`id`,`categoryID`,`pCode`, `product`, `unit`, `availableQty`, `rate`, `pStatus`) VALUES ('$product_id','$cat_id','$code','$product','$unit','$balanceQty','$rate','1');";
+            if (!run_insert_query($prepared_product_insert_query)) {
+                echo "Data insert Stopped Due to some conflict";
+                die();
+            }
+            else{
+               echo "Data inserted <hr>";  
+            }
             }
         }
     }
 }
-
 function apiCal($url)
 {
+    // Set API URL
+    // $url = 'http://myomsapi.globaltechsolution.com.np:802/api/MasterList/StockReportApp?DbName=demospec01&BranchCode';
+
     // Initialize curl session
     $ch = curl_init();
 
@@ -67,5 +87,8 @@ function apiCal($url)
     $data = json_decode($response, true);
     return $data;
 }
+?>
 
+<?php 
 include "footer.php"; 
+?>

@@ -100,6 +100,13 @@ CREATE TABLE `vendor_users` (
   `remarks` varchar(1000) DEFAULT NULL
 );
 
+CREATE TABLE `vendor_cartOut` (
+  `id` bigint PRIMARY KEY NOT NULL,
+  `product_id` bigint NOT NULL,
+  `vendor_email` varchar(255) NOT NULL,
+  `quantity` varchar(255) NOT NULL,
+  `discount` varchar(255) NOT NULL
+);
 
 CREATE TABLE `address` (
   `id` bigint NOT NULL,
